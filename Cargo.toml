@@ -1,0 +1,13 @@
+[package]
+name = "kagamin"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+minifb = "0.28.0"
+nalgebra = "0.34.0"
+rayon = "1.11.0"
+crossterm = "0.29.0"
+clap = "4.5.45"
+log = "0.4.27"
+env_logger = "0.11.8"
