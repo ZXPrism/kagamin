@@ -35,6 +35,13 @@ fn main() {
     );
 
     while window.is_open() && !window.is_key_down(minifb::Key::Escape) {
+        // clear back buffer
+        for y in 0..HEIGHT {
+            for x in 0..WIDTH {
+                buffer[y * WIDTH + x] = 0x00ffffff;
+            }
+        }
+
         // viewport transformation
         let mut position = [Vector4::<f64>::default(); 3];
         for i in 0..3 {
