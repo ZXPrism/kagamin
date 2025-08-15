@@ -43,6 +43,7 @@ impl VertexShaderState {
     }
 
     pub fn location(&self, location: usize) -> Arc<Vec<f64>> {
+        // TODO: replace this with binding points! they are not the same as locations!
         self.bind_group.get_data_from_location(location)
     }
 
