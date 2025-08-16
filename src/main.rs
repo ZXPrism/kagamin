@@ -12,6 +12,7 @@ use log::error;
 use minifb::{Window, WindowOptions};
 use nalgebra::{Matrix4, Vector4};
 
+const TITLE: &'static str = "kagaminn v0.1.0";
 const WIDTH: usize = 800;
 const HEIGHT: usize = 600;
 
@@ -19,7 +20,7 @@ pub struct VSBlinnPhong {}
 
 impl VertexShader for VSBlinnPhong {
     fn vertex(&self, vs_state: &mut VertexShaderState) {
-        let buffer = vs_state.location(0);
+        let buffer = vs_state.binding(0);
         let primitive_id = vs_state.builtin_primitive_id();
         let vertex_id = vs_state.builtin_vertex_id();
         let global_vertex_offset = primitive_id * 3 + vertex_id;
@@ -77,9 +78,14 @@ fn draw(n_vertices: usize, framebuffer: &mut Vec<u32>, vertices: &Arc<Vec<f64>>)
     let fragment_shader = FSBlinnPhong {};
 
     // make the bind group (test only, should not be placed here)
-    let bind_group = Arc::<BindGroup>::new(BindGroup {
+    let mut bind_group_create_info = BindGroupCreateInfo::new();
+    let bind_group_entry_0 = BindGroupEntry {
+        binding_point: 0,
         buffer: vertices.clone(),
-    });
+    };
+    bind_group_create_info.entries.push(bind_group_entry_0);
+
+    let bind_group = Arc::<BindGroup>::new(BindGroup::new(&bind_group_create_info));
 
     for i in 0..n_vertices / 3 {
         // VS stage
@@ -169,7 +175,7 @@ fn main() {
 
     // create window and framebuffer
     let mut window =
-        Window::new("test", WIDTH, HEIGHT, WindowOptions::default()).unwrap_or_else(|e| {
+        Window::new(TITLE, WIDTH, HEIGHT, WindowOptions::default()).unwrap_or_else(|e| {
             panic!("Failed to create window: {}", e);
         });
     let mut framebuffer = vec![0u32; WIDTH * HEIGHT];
