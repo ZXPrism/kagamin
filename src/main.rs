@@ -20,7 +20,7 @@ pub struct VSBlinnPhong {}
 
 impl VertexShader for VSBlinnPhong {
     fn vertex(&self, vs_state: &mut VertexShaderState) {
-        let buffer = vs_state.location(0);
+        let buffer = vs_state.binding(0);
         let primitive_id = vs_state.builtin_primitive_id();
         let vertex_id = vs_state.builtin_vertex_id();
         let global_vertex_offset = primitive_id * 3 + vertex_id;

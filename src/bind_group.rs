@@ -46,8 +46,8 @@ impl BindGroup {
         res
     }
 
-    pub fn get_data_from_location(&self, location: usize) -> Arc<Vec<f64>> {
-        self.buffers[location].clone()
+    pub fn get_data(&self, binding_point: usize) -> Arc<Vec<f64>> {
+        self.buffers[binding_point].clone()
     }
 }
 

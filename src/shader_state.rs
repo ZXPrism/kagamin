@@ -42,9 +42,8 @@ impl VertexShaderState {
         &mut self.builtin_position
     }
 
-    pub fn location(&self, location: usize) -> Arc<Vec<f64>> {
-        // TODO: replace this with binding points! they are not the same as locations!
-        self.bind_group.get_data_from_location(location)
+    pub fn binding(&self, binding_point: usize) -> Arc<Vec<f64>> {
+        self.bind_group.get_data(binding_point)
     }
 
     pub fn _set_vertex_id(&mut self, vertex_id: usize) {
